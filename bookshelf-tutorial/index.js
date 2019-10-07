@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Maybe try to hide this info
 var config = {
   client: "pg",
   connection: {
@@ -21,23 +22,26 @@ var bookshelf = require("bookshelf")(knex);
 
 // Tablename minimum requirement, can add custom methods later
 var User = bookshelf.Model.extend({
-  tableName: "user"
+  tableName: "user",
+  posts() {
+    return this.hasMany(Post, "email", "email");
+  }
 });
 var Users = bookshelf.Collection.extend({
   model: User
 });
-
-// Create new user
-// User.forge({
-//   name: "bob",
-//   email: "bob@example.com"
-// }).save();
 
 // Fetch users
 app.get("/users", async (req, res) => {
   // var users = await new User().fetchAll();
   var users = await Users.forge().fetch();
   res.json(users);
+  // res.send(users.toJSON());
+});
+
+app.get("/users/:email", async (req, res) => {
+  var user = await Users.where("email", req.params.email).fetch();
+  res.json(user);
   // res.send(users.toJSON());
 });
 
@@ -71,3 +75,38 @@ app.put("/users/:email", async (req, res) => {
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
+
+var Post = bookshelf.Model.extend({
+  tableName: "post",
+  user() {
+    return this.belongsTo(User, "email", "email");
+  }
+});
+
+var fetchPosts = async () => {
+  // var posts = await new Post().fetch();
+  var posts = await Post.where("id", 1).fetch({ withRelated: ["user"] });
+  console.log(posts.related("user").toJSON());
+  var user = await User.where("email", "john@example.com").fetch({
+    withRelated: ["posts"]
+  });
+  console.log(user.related("posts").toJSON());
+  // var user = await User.where("email", "john@example.com").fetch({
+  //   withRelated: ["posts"]
+  // });
+  // console.log(user.related("posts").toJSON());
+  // var posts = user.related("posts");
+  // console.log(posts);
+  // User.where("email", "john@example.com")
+  //   .fetch({ withRelated: ["posts"] })
+  //   .then(function(user) {
+  //     console.log(user.related("posts").toJSON());
+  //   })
+  //   .catch(function(err) {
+  //     console.error(err);
+  //   });
+};
+
+fetchPosts();
+
+// Also has belongsTo and belongsToMany relations
