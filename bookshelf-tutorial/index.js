@@ -32,14 +32,16 @@ var Users = bookshelf.Collection.extend({
 
 // Fetch users
 app.get("/users", async (req, res) => {
-  // var users = await new User().fetchAll();
-  var users = await Users.forge().fetch();
+  var users = await new User().fetchAll();
   res.json(users);
+  // var users = await Users.forge().fetch();
   // res.send(users.toJSON());
 });
 
 app.get("/users/:email", async (req, res) => {
-  var user = await Users.where("email", req.params.email).fetch();
+  const email = req.params.email;
+  var user = await User.where("email", email).fetch();
+
   res.json(user);
   // res.send(users.toJSON());
 });
@@ -84,8 +86,10 @@ var Post = bookshelf.Model.extend({
 
 var fetchPosts = async () => {
   // var posts = await new Post().fetch();
-  var posts = await Post.where("id", 1).fetch({ withRelated: ["user"] });
-  console.log(posts.related("user").toJSON());
+  // var posts = await new Post().fetchAll();
+  // console.log(posts.toJSON());
+  // var posts = await Post.where("id", 1).fetch({ withRelated: ["user"] });
+  // console.log(posts.related("user").toJSON());
   var user = await User.where("email", "john@example.com").fetch({
     withRelated: ["posts"]
   });
