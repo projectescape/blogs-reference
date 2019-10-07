@@ -58,6 +58,16 @@ app.delete("/users/:email", async (req, res) => {
   // await user.destroy();
 });
 
+app.put("/users/:email", async (req, res) => {
+  console.log(req.body);
+  var user = await User.where("email", req.params.email).save(
+    { ...req.body },
+    { patch: true }
+  );
+  // user = await user.save({ ...req.body });
+  res.json(user);
+});
+
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
