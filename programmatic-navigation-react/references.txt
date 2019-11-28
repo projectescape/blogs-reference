@@ -1,0 +1,2 @@
+https://github.com/ReactTraining/react-router/issues/3498
+https://tylermcginnis.com/react-router-programmatically-navigate/
