@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import First from "./First";
 import Second from "./Second";
 import Third from "./Third";
+import Fifth from "./Fifth";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
               <Link class="btn btn-info btn-block" type="button" to="/third">
                 Using withRouter
               </Link>
+              <Link class="btn btn-info btn-block" type="button" to="/fifth">
+                Using useHistory Hook
+              </Link>
             </Route>
             <Route path="/first">
               <First />
@@ -28,6 +32,9 @@ function App() {
             <Route path="/second" component={Second}></Route>
             <Route path="/third">
               <Third />
+            </Route>
+            <Route path="/fifth">
+              <Fifth />
             </Route>
           </Switch>
         </BrowserRouter>

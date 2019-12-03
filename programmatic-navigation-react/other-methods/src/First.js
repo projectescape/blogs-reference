@@ -39,6 +39,15 @@ class First extends React.Component {
         >
           Redirect using withRouter
         </button>
+        <button
+          class="btn btn-info btn-block"
+          type="button"
+          onClick={() => {
+            this.setState({ redirect: "/fifth" });
+          }}
+        >
+          Using useHistory Hook
+        </button>
       </>
     );
   }
