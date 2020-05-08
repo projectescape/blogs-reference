@@ -57,12 +57,12 @@ See any error or anything missing? Comment below, or better, send a pull request
          1. [Operators](#operators)
       1. [order](#order)
       1. [Pagination and Limiting](#pagination-and-limiting)
-   1. [Eager Loading](#eager-loading)
 1. Things I did not include in this Cheatsheet (with links to official docs)
    1. [Hooks](https://sequelize.org/v5/manual/hooks.html)
    1. [Transactions](https://sequelize.org/v5/manual/transactions.html)
    1. [Scopes](https://sequelize.org/v5/manual/scopes.html)
    1. [Raw Queries](https://sequelize.org/v5/manual/raw-queries.html)
+   1. [Eager Loading](https://sequelize.org/v5/manual/models-usage.html#eager-loading)
 
 # Installing Dependencies
 
@@ -893,8 +893,3 @@ ModelName.findAll({
   limit: 5, // Return only five results
 });
 ```
-
-## Eager Loading
-
-Eager Loading retrieving associated data in the same query.
-To learn about them in detail, check out the official [docs](https://sequelize.org/v5/manual/models-usage.html#eager-loading)
